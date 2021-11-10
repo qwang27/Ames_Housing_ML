@@ -1,0 +1,44 @@
+import os
+import pandas as pd
+import numpy as np
+from scipy import stats
+import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+import os
+import pandas as pd
+
+cwd = os.getcwd()
+print("Current working directory: {0}".format(cwd))
+
+os.chdir("/Users/chereowang27/NYCDSA/Machine_Learning_I/Machine_Learning_Project/")
+
+realestate = pd.read_csv("./data/Ames Real Estate Data.csv", low_memory = False)
+HousePrice = pd.read_csv("./data/Ames_HousePrice.csv")
+
+realestate = pd.DataFrame(realestate)
+HousePrice = pd.DataFrame(HousePrice)
+
+# clean realestate
+realestate.describe()
+realestate.shape  #22213 x 91
+len(realestate.columns)
+
+#clean HousePrice
+HousePrice.shape  #2580 x 82
+HousePrice.columns
+
+cols = HousePrice.columns
+num_cols = HousePrice._get_numeric_data().columns
+num_cols
+categorical = list(set(cols) - set(num_cols))
+
+for feature in categorical: 
+    print(HousePrice[feature].value_counts())
+    print('')
+
+missingRows = HousePrice.isnull().any(axis = 1)
+nmis = HousePrice.isna()
+missingCols = HousePrice.isna().sum()>0
+HousePrice.columns[missingCols]
